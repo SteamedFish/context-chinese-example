@@ -2,11 +2,11 @@
 
 * ConTeXt 中文示例
 
-本文给出使用 $\CONTEXT$ 创建中文文档的一个简单的例子。
+本文给出使用 $$\CONTEXT$$ 创建中文文档的一个简单的例子。
 
 
 本文档使用了 [[https://www.google.com/get/noto/help/cjk/][Noto Sans CJK 字体]]，你系统中需要有此字体，或者你可以修改演示文档，
-使用任何你系统中拥有的字体。ConTeXt 可以识别 =OSFONTDIR= 环境下面绝大多数常见的
+使用任何你系统中拥有的字体。$$\CONTEXT$$ 可以识别 =OSFONTDIR= 环境下面绝大多数常见的
 字体格式。
 
 
@@ -14,11 +14,11 @@
 
 ** 方法一
 
-如果你需要同时使用 $\LATEX$ 和 $\CONTEXT$，那么建议安装 [[https://www.tug.org/texlive/][textlive]]。
+如果你需要同时使用 $$\LATEX$$ 和 $$\CONTEXT$$ ，那么建议安装 [[https://www.tug.org/texlive/][textlive]]。
 
 ** 方法二
 
-如果你只需要安装 $\CONTEXT$，那么建议安装 [[https://www.contextgarden.net/ConTeXt_Standalone][ConTeXt Standalone]]， ArchLinux 可以直
+如果你只需要安装 $$\CONTEXT$$ ，那么建议安装 [[https://www.contextgarden.net/ConTeXt_Standalone][ConTeXt Standalone]]， ArchLinux 可以直
 接安装 =context-minimals-git= ，其他发行版请阅读文档。
 
 ConTeXt standalone 的更新比 texlive 会频繁很多，版本往往比较新。
@@ -73,7 +73,7 @@ context example.tex
 
 * ConTeXt 进一步学习材料
 
-首先请注意 $\CONTEXT$ 有两个引擎，分别是 MkII 和 MkIV，前者已经过时。网上很多材
+首先请注意 $$\CONTEXT$$ 有两个引擎，分别是 MkII 和 MkIV，前者已经过时。网上很多材
 料都是针对前者的。
 
 [[https://www.contextgarden.net/][ConTeXt Wiki]] 有一个入门文档列表，建议首先阅读。
