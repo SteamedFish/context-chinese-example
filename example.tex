@@ -1,0 +1,303 @@
+% -*- mode: ConTeXt; -*-
+% vim: filetype=context
+
+% 设置环境语言为中文，也就是排版规则使用中文的各种规则。
+\mainlanguage[cn]
+\language[cn]
+\enableregime[utf]
+\setscript[hanzi]
+
+% 开启颜色支持
+\usecolors[xwi]
+\setupcolors[state=start]
+
+% 设置图片的默认路径
+\setupexternalfigures[directory={template, /Users/steamedfish/dumbo/dumbo-training/template}]
+
+% 代码语法高亮方案，需要系统中拥有 vim 包并且 vim 在 $PATH 中
+\usemodule[t-vim]
+\definevimtyping [PYTHON] [syntax=python, numbering=yes, numberlocation=right, numbercolor=darkyellow, margin=3em, lines=split,]
+\definevimtyping [BASH] [syntax=sh, numbering=yes, numberlocation=right, numbercolor=darkyellow, margin=3em, lines=split,]
+
+% 流程图模块，后面会使用到
+\usemodule[chart]
+
+% 设置 pdf 的超链接样式，以及侧边栏超链接（menu）
+\setupinteraction [
+  state=start,
+  style=bold,
+  color=darkblue,
+  click=yes,
+  menu=on,
+  title={\CONTEXT 测试文档},
+  subtitle={subtitle},
+  author={牛逼的作者},
+]
+
+% 设置页面参数
+\setuppapersize[A4]
+
+% 设置列表样式
+\setupitemize[textdistance=medium,]
+\setupitemize[autointro]    % prevent orphan list intro
+\setupitemize[indentnext=no]
+
+% 设置目录和书签，并且将书签目录默认设置为显示状态，并且默认只显示最顶上两个级别
+\placebookmarks[chapter, section, subsection, subsubsection, subsubsubsection, subsubsubsubsection][chapter, section]
+\setupinteractionscreen[option=bookmark]
+\setuptagging[state=start]
+
+% 设置文本字体的样式
+\definefontfeature[default][default][script=latn, protrusion=quality, expansion=quality, itlc=yes, textitalics=yes, onum=yes, pnum=yes]
+\definefontfeature[smallcaps][script=latn, protrusion=quality, expansion=quality, smcp=yes, onum=yes, pnum=yes]
+\setupalign[hz,hanging]
+\setupitaliccorrection[global, always]
+\setupbodyfontenvironment[default][em=italic]
+% \definefallbackfamily[mainface][rm][DejaVu Serif][preset=range:greek, force=yes]
+\definefontfamily[mainface][rm][notosanscjksc][]
+\definefontfamily[mainface][mm][notosanscjksc]
+\definefontfamily[mainface][ss][notosanscjksc]
+\definefontfamily[mainface][tt][notosansmonocjksc][features=none]
+\setupbodyfont[mainface,]
+
+% 设置文本空白
+\setupwhitespace[medium]
+
+% 设置行间距
+\setupinterlinespace[medium]
+
+% 设置数字使用中文而不是阿拉伯文字
+\definestructureconversionset[chinese][numbers][cn]
+
+% 设置章节标题的样式，我们让章的编号用中文，而小节编号用阿拉伯数字。
+% 章节必须从奇数页开始，并且章节后面会有一个横线
+% 章节的页码上，设置不要有 header
+\define[2]\ChineseChapter{\color[darkslateblue]{第#1章} #2}
+\define[2]\ChineseSection{\color[cornflowerblue]{第 #1 节} #2}
+\setuphead[title]              [style=\tfd, header=empty]
+\setuphead[chapter]            [numbercommand=\ChineseChapter, style=\bfd, page=makeup, textcolor=darkslateblue, align=middle, after=\hairline, before=, sectionconversionset=chinese, header=empty]
+\setuphead[section]            [style=\bfb, numbercommand=\ChineseSection, textcolor=cornflowerblue, align=normal, after=, before=]
+\setuphead[subsection]         [style=\bf, numbercommand=\ChineseSection, textcolor=cornflowerblue, align=normal, after=, before=]
+\setuphead[subsubsection]      [style=\bf, textcolor=cornflowerblue]
+\setuphead[subsubsubsection]   [style=\sc]
+\setuphead[subsubsubsubsection][style=\it]
+
+% 设置目录列表的样式
+% 目录页面，设置为没有 header
+\setupcombinedlist[content][list={chapter,section}, alternative=c, header=no]
+\define[1]\ChineseContentPage{第#1页}
+\define[2]\ChineseContentChapterNumber{第#1章 #2}
+\define[1]\ChineseContentChapter{#1}
+\setuplist[chapter][width=2.15cm, pagestyle={\feature[+][tabularnumbers]}, style=bold, headnumber=yes, sectionnumber=no, numbercommand=\ChineseContentChapterNumber, pagecommand=\ChineseContentPage, aligntitle=yes, textcommand=\ChineseContentChapter]
+\setuplist[section][pagestyle={\feature[+][tabularnumbers]}, style=regular, headnumber=yes, sectionnumber=yes, pagecommand=\ChineseContentPage, aligntitle=yes, margin=1em]
+\setuplist[subsection][width=15mm, headnumber=no, sectionnumber=no, pagecommand=\ChineseContentPage, margin=14pt]
+\setuplist[subsubsection][width=20mm, style=slanted, pagestyle=normal]
+
+
+\definedescription
+  [description]
+  [headstyle=bold, style=normal, location=hanging, width=broad, margin=1cm, alternative=hanging]
+
+% 设置图片和表格的样式
+\setupfloat[figure][default={here, nonumber}]
+\setupfloat[table][default={here, nonumber}]
+
+% 设置分割线的样式
+\setupthinrules[interlinespace=small, color=darkslateblue, height=3pt] % width of horizontal rules
+
+% 开始正文内容
+\starttext
+
+% 标题页面部分，应该关闭页码显示，关闭章节标题，并且更改字体设置
+\setuppagenumber[state=stop]
+\setuphead[chapter]            [text=none, numbercommand=, before=, after=\hairline, sectionnumber=no, ]
+\switchtobodyfont[20pt]
+
+% 标题页面
+\startalignment[middle]
+  {\tfd \CONTEXT 示例文档}
+  \smallskip
+  {\tfa 副标题}
+  \smallskip
+  {\tfa 牛逼的作者}
+  \bigskip
+\stopalignment
+
+% 目录部分，应该重置页面大小，并且把页码设置为罗马数字
+\switchtobodyfont[14pt]
+\page[yes, blank, odd]
+\setupbackgrounds[page][background=none, state=start]
+\setuppagenumber [state=start, way=bychapter, numberconversion=romannumerals]
+% 设置目录部分的页脚显示罗马数字
+\setupfootertexts
+[{\color[darkgray]{\userpagenumber}}]
+
+% 目录、表格列表、图片列表（后两者本文没有，注释掉）
+\completecontent
+% \completelistoftables
+% \completelistoffigures
+
+% 每个章节应该从奇数页开始
+\page[yes, blank, odd]
+
+% 正文部分，重新打开章节标题显示，并且把页码设置为中文数字，重新从 1 开始计数
+\setuphead[chapter]            [numbercommand=\ChineseChapter, style=\bfd, page=makeup, textcolor=darkslateblue, align=middle, after=\hairline, before=, sectionconversionset=chinese, header=empty]
+\setuppagenumbering[conversion=chinese,location=footer]
+\setuppagenumber [numberconversion=cn,state=start, way=bytext]
+\setcounter[userpage][1]
+
+% 设置页面的 header
+% 为了照顾双面打印，header 的奇数页和偶数页设置应该不同，一个为章节内容，一个为书名。
+\setupheadertexts
+[]
+[{\color[darkgray]{第\getmarking[chapternumber]章 --- \getmarking[chapter]}}]
+[]
+[{\color[darkgray]{\CONTEXT 示例文档}}]
+
+% 设置页面的 footer，所有页面均相同，居中显示。
+\setupfootertexts
+[{\color[darkgray]{第\userpagenumber 页}}]
+
+% 正式开始正文
+
+\chapter[title={概述},reference={概述}]
+
+本文为 \CONTEXT 的中文演示文档。
+
+\section[title={前言},reference={前言}]
+
+牛逼的前言。
+
+\chapter[title={牛逼},reference={牛逼}]
+
+牛逼的一章。
+
+\section[title={厉害},reference={厉害}]
+
+厉害了我的哥
+
+\subsection[title={语法高亮},reference={语法高亮}]
+
+代码块：
+
+\startBASH
+  if [ "$OSTYPE" == "linux-gnu" ]; then
+      echo "your system is niubility"
+  elif [[ "$OSTYPE" == "darwin"* ]]; then
+      echo "your system is zhuangbility"
+  else
+      echo "your system is shability"
+  fi
+\stopBASH
+
+在线高亮代码：\inlinePYTHON{import sys; print(next(p for p in sys.path))}，牛逼吧！
+
+\subsection[title={列表},reference={列表}]
+
+\startitemize[n]
+\item
+  列表一
+  \startitemize[a,packed]
+  \item
+    aaa
+  \item
+    bbb
+  \item
+    ccc
+  \stopitemize
+\item
+  列表二
+  \startitemize[a,packed]
+  \item
+    dfafasd
+  \item
+    我的神呐
+  \stopitemize
+\stopitemize
+
+\section[title={流程图},reference={流程图}]
+
+% 文档参见 http://www.pragma-ade.com/general/manuals/charts-mkiv
+
+\startFLOWchart [666]
+  \startFLOWcell
+    \name {1}
+    \location {1,1}
+    \shape {34}
+    \text {\tt{\CONTEXT 牛逼吧！}}
+    \connection [rl] {2}
+    \connection [bt] {3}
+  \stopFLOWcell
+  \startFLOWcell
+    \name {3}
+    \location {1,2}
+    \shape {34}
+    \text {确实牛逼啊！}
+    \connection [rl] {2}
+  \stopFLOWcell
+  \startFLOWcell
+    \name {2}
+    \location {2,1}
+    \shape {34}
+    \text {\tt{666} \\ \tt{实在是 666 啊！}}
+  \stopFLOWcell
+\stopFLOWchart
+
+\FLOWchart [666]
+
+
+\section[title={表格},reference={表格}]
+
+
+\starttabulate[|c|r|r|]
+\HL
+\NC 0 \NC \setupunit[method=0]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=0]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 1 \NC \setupunit[method=1]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=1]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 2 \NC \setupunit[method=2]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=2]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 3 \NC \setupunit[method=3]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=3]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 4 \NC \setupunit[method=4]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=4]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 5 \NC \setupunit[method=5]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=5]\unit{@@,@@0.10 kilogram} \NC \NR
+\NC 6 \NC \setupunit[method=6]\unit{00,000.10 kilogram}
+      \NC \setupunit[method=6]\unit{@@,@@0.10 kilogram} \NC \NR
+\HL
+\stoptabulate
+
+\section[title={文字},reference={文字}]
+
+各种角度 \rotate[rotation=90]{right} 的翻转  \rotate[rotation=270]{哎呀呀}
+
+\setupframedtexts
+      [width=.8\makeupwidth,
+       background=color,
+       backgroundcolor=gray,
+       corner=round,
+       framecolor=blue,
+       rulethickness=2pt]
+  \startframedtext
+    这真的是太牛逼了
+    \blank
+    不知道应该用什么词汇来形容
+\stopframedtext
+
+\definecolor [darkorange]   [c=0.0,m=0.60,y=1.00,k=0.0]
+
+\blackrule[width=\hsize,height=1cm,color=red,after=]
+\blackrule[width=\hsize,height=1cm,color=white,after=]
+\blackrule[width=\hsize,height=1cm,color=blue,after=]
+\blackrule[width=\hsize,height=1cm,color=darkorange]
+
+\section[title={pictures},reference={pictures}]
+
+\startMPrun
+     input example ;
+\stopMPrun
+
+\externalfigure[mprun.21][width=10cm]
+
+\stoptext
